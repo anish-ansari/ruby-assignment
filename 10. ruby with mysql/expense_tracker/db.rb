@@ -5,7 +5,7 @@ class Database
     host = "localhost"
     db = "expense_tracker"
     user = "anish"
-    pass = "Anish786!@#"
+    pass = ""
 
     # accessing the database via mysql2 gem
     conn = Mysql2::Client.new(
