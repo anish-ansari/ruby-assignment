@@ -105,22 +105,17 @@ class ExpenseTracker < Database
 
     puts "\nID      |       Amount     |    Spent on" # 4 tabs
     puts '________|__________________|__________________'
-    total = 0
-    i = 1
 
     # oh yea, it's big brain time
     @indexing = {}
+    total = 0
+    temp_count = 1
     @data.each do |d|
       # so assigning table's id to serial order of value of i, then putting them as key value pair in a hash
-      @indexing[i] = d['ID']
-      i += 1
-    end
-
-    i = 1
-    @data.each do |d|
+      @indexing[temp_count] = d['ID']
       total += d['Amount']
-      puts "#{i}       |         #{d['Amount']}        |   #{d['Description']}"
-      i += 1
+      puts "#{temp_count}       |         #{d['Amount']}        |   #{d['Description']}"
+      temp_count += 1
     end
     puts '________|__________________|__________________'
     puts "               Total = #{total}"
@@ -140,9 +135,9 @@ class ExpenseTracker < Database
       print 'Enter new description: '
       new_descp = gets.chomp
 
-      change_expense = db_connection.prepare 'UPDATE Expense
+      change_expense = db_connection.prepare "UPDATE Expense
                                               SET Amount = ?, Description = ?
-                                              WHERE ID = ?'
+                                              WHERE ID = ?"
       change_expense.execute new_amount, new_descp, update_id
       puts 'Update success'
     else
